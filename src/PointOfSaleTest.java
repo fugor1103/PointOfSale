@@ -28,7 +28,7 @@ public class PointOfSaleTest extends TestCase{
 		
 		posC.makeIceCream(dummyIceCreamDecorator);
 		
-		expected = 25.0;
+		expected = 25.5;
 		assertEquals(expected , posC.getCost());
 	
 		

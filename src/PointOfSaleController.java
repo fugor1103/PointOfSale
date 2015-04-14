@@ -64,30 +64,6 @@ public class PointOfSaleController {
 
         });
 		
-//		for (int i =0; i<this.posWindow.iceCreamButtonList.size(); i++){
-//			final IceCream iceCreamClicked =  posWindow.iceCreamButtonList.get(i).getIceCream();
-//			posWindow.iceCreamButtonList.get(i).addActionListener(new ActionListener() {
-//
-//	            public void actionPerformed(ActionEvent e) {
-////	            	posWindow.addTotal(posWindow.iceCreamButtonList.get(i).getPrice());
-//	            	makeIceCream(iceCreamClicked);
-//	            	posWindow.disableIceCreamButtons();
-//	            }
-//
-//	        });
-//		}
-//		
-//		for (int i =0; i<this.posWindow.decoratorButtonList.size(); i++){
-//			final IceCream iceCreamClicked =  posWindow.decoratorButtonList.get(i).getIceCream();
-//			posWindow.decoratorButtonList.get(i).addActionListener(new ActionListener() {
-//
-//	            public void actionPerformed(ActionEvent e) {
-////	            	posWindow.addTotal(posWindow.iceCreamButtonList.get(i).getPrice());
-//	            	makeIceCream(iceCreamClicked);
-//	            }
-//
-//	        });
-//		}
 		updateButtonsListener();
 	}
 
@@ -140,7 +116,6 @@ public class PointOfSaleController {
 			posWindow.decoratorButtonList.get(i).addActionListener(new ActionListener() {
 
 	            public void actionPerformed(ActionEvent e) {
-	            	System.out.println("clicekdec");
 //	            	posWindow.addTotal(posWindow.iceCreamButtonList.get(i).getPrice());
 	            	makeIceCream(iceCreamClicked);
 	            }

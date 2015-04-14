@@ -7,19 +7,26 @@
 <project basedir="." default="build" name="PointOfSale">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../SCM-eclipse-jee-kepler-SR2-win32-20140317/eclipse"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="PointOfSale.classpath">
+        <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
 	
+
 	<!-- Variable -->
 	<property name="build.dir" location="bin" />
 	<property name="dist.dir" location="dist" />
 	<property name="docs.dir" location="docs" />
 	<property name="src.dir" location="src" />
 	
-    <path id="PointOfSale.classpath">
-        <pathelement location="bin"/>
-    </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -29,11 +36,13 @@
             </fileset>
         </copy>
     </target>
+	
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
         <delete dir="${docs.dir}"/>
     </target>
+	
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
@@ -58,16 +67,49 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-	 <target name="jar" depends="build-project">
-	        <jar destfile="${dist.dir}/test.jar" basedir="${build.dir}">
-	            <manifest>
-	            	<attribute name ="Main-Class" value="PointOfSaleWindow"/>
-	            	</manifest>
-	        </jar>
-	    </target>
+	
+	
+    <target name="PointOfSale">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="PointOfSaleTest" todir="${junit.output.dir}"/>
+            <classpath refid="PointOfSale.classpath"/>
+        </junit>
+    </target>
+    <target name="PointOfSaleController">
+        <java classname="PointOfSaleController" failonerror="true" fork="yes">
+            <classpath refid="PointOfSale.classpath"/>
+        </java>
+    </target>
+    <target name="PointOfSaleTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="PointOfSaleTest" todir="${junit.output.dir}"/>
+            <classpath refid="PointOfSale.classpath"/>
+        </junit>
+    </target>
     <target name="PointOfSaleWindow">
         <java classname="PointOfSaleWindow" failonerror="true" fork="yes">
             <classpath refid="PointOfSale.classpath"/>
         </java>
     </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+	
+
+	 <target name="jar" depends="build-project">
+	        <jar destfile="${dist.dir}/project.jar" basedir="${build.dir}">
+	            <manifest>
+	            	<attribute name ="Main-Class" value="PointOfSaleController"/>
+	            	</manifest>
+	        </jar>
+	    </target>
 </project>
