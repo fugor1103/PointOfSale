@@ -8,6 +8,7 @@ public class PointOfSaleTest extends TestCase{
 	
 	public void setUp() throws Exception {
 		posC = new PointOfSaleController();
+		
 	}
 	
 
